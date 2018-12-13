@@ -1,10 +1,14 @@
-include_with_api(":componentservice");
-include ':app', ':onecompone', ':twocomponet',
-//        ':componentservice',
+include_with_api(":onecompone");
+
+//include ':onecompone'
+include ':twocomponet',
+        ':app',
+        ':componentservice',
         ':build-gradle',
         ':basiclib',
         ':componentlib',
-        ':basicres'
+        ':basicres',
+        ':build-CompileApi'
 
 def include_with_api(def projectName) {
     include projectName
@@ -12,34 +16,95 @@ def include_with_api(def projectName) {
     String rootDir = rootDir.getAbsolutePath();
     String moduleName = ((String) projectName).replace(":", "")
 
-    String parentName = moduleName.replace("plugin-", "");
-    System.out.print("rootDir=="+rootDir)
-    System.out.print("moduleName=="+moduleName)
-    System.out.print("parentName=="+parentName)
+    String parentName = moduleName.replace("compone", "")+"_service"
+    System.out.println("rootDir==" + rootDir) //D:\MKHsvn\zujianhua
+    System.out.println("moduleName==" + moduleName) //componentservice
+    System.out.println("parentName==" + parentName) //service
 
-//    copy() {
-//        from rootDir + '/' + parentName + '/build.gradle'
-//        into rootDir + '/' + moduleName + '/'
-//        filter { line ->
-//            String content = line;
+
+    copy() {
+
+        from rootDir + '/' + moduleName + '/src/main/'
+        into rootDir + '/' + parentName + '/src/main/'
+        include '**/*.gradle'
+        include {
+            details -> details.file.name.contains('AndroidManifest')
+        }
+        filter { line ->
+            String content = line;
+            content = content.replace("android:label=\"@string/app_name\"", "")
+            if (content.contains("package=\"")) {
+                content = content.replace("\">", ".plugin\">")
+            }
+            content
+        }
+    }
+   // build.gradle
+    copy() {
+
+        from rootDir + '/' + moduleName + '/'
+        into rootDir + '/' + parentName + '/'
+        include '**/*.gradle'
+        include {
+            details -> details.file.name.contains('build')
+        }
+        filter { line ->
+            String content = line;
+            if (content.contains("compile project(")) {
+                content = ""
+            }
+            if (content.contains("compileApi")) {
+                content = ""
+            }
+            if (content.contains("apply plugin: 'com.dd.comgradle'")) {
+                content = "apply plugin: 'com.android.library'"
+            }
+            if (content.contains("apply plugin: 'com.dd.compileapi'")) {
+                content = ""
+            }
+            if (content.contains("applicationId")) {
+                content = ""
+            }
+            if (content.contains("combuild")) {
+                content = ""
+            }
+            if (content.contains("applicationName")) {
+                content = ""
+            }
+            if (content.contains("isRegisterCompoAuto")) {
+                content = ""
+            }
+            content
+        }
+    }
+
+
+    copy() {
+        from rootDir + '/' + moduleName + '/src/main/java/com/sage/onecompone/'
+        into rootDir + '/' + parentName + '/src/main/java/com/sage/onecompone/plugin/'
+        include '**/*.api'
+
+
+        exclude{
+            details -> details.file.name.endsWith('.java')
+        }
+
+        filter { line ->
+            String content = line;
+            System.out.println("content>>>>>>>>>>>>>>>>>>>>>>> ==" + content)
 //            if (content.contains(moduleName)) {
 //                content = "";
 //            }
-//            content
-//        }
-//    }
-//
-//    copy() {
-//        from rootDir + '/' + parentName + '/src/main/AndroidManifest.xml'
-//        into rootDir + '/' + moduleName + '/src/main/'
-//        filter { line ->
-//            String content = line;
-//            content = content.replace("android:label=\"@string/app_name\"", "")
-//            if (content.contains("package=\"")) {
-//                content = content.replace("\">", ".plugin\">")
-//            }
-//            content
-//        }
-//    }
+
+            if (content.contains("package com.sage.onecompone;")) {
+                content = content.replace("package com.sage.onecompone;","package com.sage.onecompone.plugin;")
+//                content = "package com.sage.onecompone.plugin;"
+            }
+            content
+        }
+    }
+
+
+    include parentName
 }
 

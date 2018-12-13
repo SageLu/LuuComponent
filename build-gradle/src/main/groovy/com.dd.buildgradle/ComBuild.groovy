@@ -3,6 +3,7 @@ package com.dd.buildgradle
 import com.dd.buildgradle.exten.ComExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Configuration
 
 class ComBuild implements Plugin<Project> {
 
@@ -67,6 +68,7 @@ class ComBuild implements Plugin<Project> {
         }
 
     }
+
 
     /**
      * 根据当前的task，获取要运行的组件，规则如下：

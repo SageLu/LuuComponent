@@ -3,7 +3,7 @@ package com.sage.onecompone;
 import com.luojilab.component.componentlib.applicationlike.IApplicationLike;
 //import com.luojilab.component.componentlib.router.Router;
 import com.luojilab.component.componentlib.router.Router;
-import com.luojilab.componentservice.readerbook.OneService;
+import com.sage.onecompone.plugin.OneService;
 
 public class OneAppLike implements IApplicationLike {
 

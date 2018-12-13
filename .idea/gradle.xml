@@ -11,9 +11,11 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/basiclib" />
             <option value="$PROJECT_DIR$/basicres" />
+            <option value="$PROJECT_DIR$/build-CompileApi" />
             <option value="$PROJECT_DIR$/build-gradle" />
             <option value="$PROJECT_DIR$/componentlib" />
             <option value="$PROJECT_DIR$/componentservice" />
+            <option value="$PROJECT_DIR$/one_service" />
             <option value="$PROJECT_DIR$/onecompone" />
             <option value="$PROJECT_DIR$/twocomponet" />
           </set>

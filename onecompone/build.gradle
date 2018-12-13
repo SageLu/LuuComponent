@@ -1,5 +1,7 @@
 //apply plugin: 'com.android.application'
 apply plugin: 'com.dd.comgradle'
+apply plugin: 'com.dd.compileapi'
+
 android {
     compileSdkVersion 28
 
@@ -34,8 +36,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     compile project(':componentservice')
+    compileApi(':one_service')
+
 }
 combuild {
     applicationName = 'com.sage.onecompone.runalone.application.AppApplication'
-    isRegisterCompoAuto = true
-}
+    isRegisterCompoAuto = true }

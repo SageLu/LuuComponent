@@ -1,8 +1,7 @@
 package com.sage.onecompone;
 
 import android.support.v4.app.Fragment;
-
-import com.luojilab.componentservice.readerbook.OneService;
+import com.sage.onecompone.plugin.OneService;
 
 public class OneServiceImpl implements OneService {
 
